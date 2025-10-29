@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran Wajib Retribusi Daerah</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .header h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .header h3 {
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .form-content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input[type="file"] {
+            border-style: dashed;
+            border-color: #667eea;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .radio-item, .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radio-item:hover, .checkbox-item:hover {
+            border-color: #667eea;
+            background: #f0f3ff;
+        }
+
+        .radio-item input, .checkbox-item input {
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .ktp-preview {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .ktp-preview img {
+            max-width: 300px;
+            max-height: 200px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .ktp-preview p {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .upload-status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .success-message {
+            display: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            animation: slideIn 0.5s ease-out;
+            text-align: center;
+        }
+
+        .success-message .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            animation: scaleIn 0.6s ease-out;
+        }
+
+        .success-message h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .success-message p {
+            font-size: 16px;
+            opacity: 0.95;
+            margin: 5px 0;
+        }
+
+        .success-details {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .success-details p {
+            margin: 8px 0;
+            font-size: 14px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>PEMERINTAH KABUPATEN REMBANG</h1>
+            <h2>DINAS KELAUTAN DAN PERIKANAN</h2>
+            <h3>FORMULIR PENDAFTARAN WAJIB RETRIBUSI DAERAH</h3>
+            <p style="font-size: 14px; margin-top: 10px;">(DATA PRIBADI & USAHA)</p>
+        </div>
+
+        <div class="form-content">
+            <form id="registrationForm">
+                <!-- Section A: Data Pribadi -->
+                <div class="section">
+                    <div class="section-title">A. DATA PRIBADI (BERDASARKAN KTP)</div>
+                    
+                    <div class="form-group">
+                        <label>1. Nama Lengkap *</label>
+                        <input type="text" name="namaLengkap" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>2. Nomor Induk Kependudukan (NIK) *</label>
+                        <input type="text" id="nikInput" name="nik" maxlength="16" required pattern="\d{16}">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>3. Tempat Lahir *</label>
+                            <input type="text" name="tempatLahir" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Lahir *</label>
+                            <input type="date" name="tanggalLahir" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>4. Jenis Kelamin *</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="jenisKelamin" value="Laki-laki" required>
+                                <span>Laki-laki</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="jenisKelamin" value="Perempuan" required>
+                                <span>Perempuan</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>5. Alamat Domisili *</label>
+                        <textarea name="alamatDomisili" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>6. RT *</label>
+                            <input type="text" name="rtPribadi" maxlength="3" required>
+                        </div>
+                        <div class="form-group">
+                            <label>RW *</label>
+                            <input type="text" name="rwPribadi" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>7. Kelurahan / Desa *</label>
+                            <input type="text" name="kelurahanPribadi" required>
+                        </div>
+                        <div class="form-group">
+                            <label>8. Kecamatan *</label>
+                            <input type="text" name="kecamatanPribadi" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>9. Kabupaten / Kota *</label>
+                            <input type="text" name="kabupatenPribadi" required>
+                        </div>
+                        <div class="form-group">
+                            <label>10. No. Telepon / HP *</label>
+                            <input type="tel" name="teleponPribadi" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>11. Upload Foto KTP *</label>
+                        <input type="file" id="ktpFile" name="ktpFile" accept="image/*,.pdf" required>
+                        <div id="ktpPreview" class="ktp-preview">
+                            <img id="ktpImage" alt="Preview KTP">
+                            <p id="ktpFileName"></p>
+                        </div>
+                        <div id="ktpUploadStatus" class="upload-status"></div>
+                    </div>
+                </div>
+
+                <!-- Section B: Data Usaha -->
+                <div class="section">
+                    <div class="section-title">B. DATA USAHA</div>
+                    
+                    <div class="form-group">
+                        <label>1. Jenis Permohonan *</label>
+                        <div class="radio-group">
+                            <label class="radio-item">
+                                <input type="radio" name="jenisPermohonan" value="Baru" required>
+                                <span>Baru</span>
+                            </label>
+                            <label class="radio-item">
+                                <input type="radio" name="jenisPermohonan" value="Perubahan" required>
+                                <span>Perubahan</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>2. Nama Usaha *</label>
+                        <input type="text" name="namaUsaha" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>2a. Tempat Pelelangan Ikan (TPI) *</label>
+                        <select name="tpi" required>
+                            <option value="">-- Pilih TPI --</option>
+                            <option value="TPI Sarang">TPI Sarang</option>
+                            <option value="TPI Karanganyar">TPI Karanganyar</option>
+                            <option value="TPI Karanglincak">TPI Karanglincak</option>
+                            <option value="TPI Pandangan">TPI Pandangan</option>
+                            <option value="TPI Pangkalan">TPI Pangkalan</option>
+                            <option value="TPI Pasarbanggi">TPI Pasarbanggi</option>
+                            <option value="TPI Tasikagung I">TPI Tasikagung I</option>
+                            <option value="TPI Tasikagung II">TPI Tasikagung II</option>
+                            <option value="TPI Tanjungsari">TPI Tanjungsari</option>
+                            <option value="TPI Tunggulsari">TPI Tunggulsari</option>
+
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>3. Alamat Usaha *</label>
+                        <textarea name="alamatUsaha" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>4. RT *</label>
+                            <input type="text" name="rtUsaha" maxlength="3" required>
+                        </div>
+                        <div class="form-group">
+                            <label>RW *</label>
+                            <input type="text" name="rwUsaha" maxlength="3" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>5. Kelurahan / Desa *</label>
+                            <input type="text" name="kelurahanUsaha" required>
+                        </div>
+                        <div class="form-group">
+                            <label>6. Kecamatan *</label>
+                            <input type="text" name="kecamatanUsaha" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>7. Kabupaten *</label>
+                            <input type="text" name="kabupatenUsaha" required>
+                        </div>
+                        <div class="form-group">
+                            <label>8. Nomor Telepon Usaha *</label>
+                            <input type="tel" name="teleponUsaha" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>9. Jenis Izin yang Dimiliki</label>
+                        <input type="text" name="jenisIzin">
+                    </div>
+
+                    <div class="form-group">
+                        <label>10. Jenis Usaha / Kegiatan *</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="jenisUsaha" value="Pelelangan ikan">
+                                <span>Pelelangan ikan</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="jenisUsaha" value="Kapal freezer">
+                                <span>Kapal freezer</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="jenisUsaha" value="Persewaan basket ikan">
+                                <span>Persewaan basket ikan</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="jenisUsaha" value="Agen Es Balok">
+                                <span>Agen Es Balok</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section C: Kewajiban Retribusi -->
+                <div class="section">
+                    <div class="section-title">C. KEWAJIBAN RETRIBUSI</div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="kewajibanRetribusi" value="Penyediaan Tempat Pelelangan Ikan">
+                                <span>Penyediaan Tempat Pelelangan Ikan</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="kewajibanRetribusi" value="Pelayanan Kapal Freezer">
+                                <span>Pelayanan Kapal Freezer</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="kewajibanRetribusi" value="Pelayanan Persewaan Basket Ikan">
+                                <span>Pelayanan Persewaan Basket Ikan</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="kewajibanRetribusi" value="Pelayanan Tempat Bongkar Muat Es">
+                                <span>Pelayanan Tempat Bongkar Muat Es</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-primary">Simpan Data</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Reset Form</button>
+                </div>
+
+                <div id="successMessage" class="success-message">
+                    <div class="icon">✓</div>
+                    <h3>Data Berhasil Disimpan!</h3>
+                    <p>Terima kasih telah mengisi formulir pendaftaran</p>
+                    <div class="success-details">
+                        <p><strong>NIK:</strong> <span id="savedNIK"></span></p>
+                        <p><strong>Nama:</strong> <span id="savedNama"></span></p>
+                        <p><strong>TPI:</strong> <span id="savedTPI"></span></p>
+                        <p><strong>Waktu:</strong> <span id="savedWaktu"></span></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // GANTI URL INI DENGAN URL GOOGLE APPS SCRIPT ANDA
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdtV0RWLTGB0RqY5P6UlRC5LrFSiD8Wtt9jKusojfX1T_-dEZHHdd34ld6CIUbh8bxQQ/exec';
+
+        // Preview KTP file
+        document.getElementById('ktpFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const preview = document.getElementById('ktpPreview');
+                const img = document.getElementById('ktpImage');
+                const fileName = document.getElementById('ktpFileName');
+                
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        img.src = e.target.result;
+                        img.style.display = 'block';
+                        fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                        preview.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    img.style.display = 'none';
+                    fileName.textContent = `File: ${file.name} (${(file.size / 1024).toFixed(2)} KB)`;
+                    preview.style.display = 'block';
+                }
+            }
+        });
+
+        // Upload KTP to Google Drive
+        async function uploadKTP(file, nik) {
+            const status = document.getElementById('ktpUploadStatus');
+            status.style.display = 'block';
+            status.style.background = '#cce5ff';
+            status.style.color = '#004085';
+            status.textContent = '📤 Mengupload KTP ke Google Drive...';
+            
+            try {
+                const reader = new FileReader();
+                
+                return new Promise((resolve, reject) => {
+                    reader.onload = async function(e) {
+                        try {
+                            const base64Data = e.target.result.split(',')[1];
+                            
+                            const uploadUrl = SCRIPT_URL + '?upload=ktp';
+                            const formData = new URLSearchParams();
+                            formData.append('fileData', base64Data);
+                            formData.append('fileName', file.name);
+                            formData.append('mimeType', file.type);
+                            formData.append('nik', nik);
+                            
+                            const response = await fetch(uploadUrl, {
+                                method: 'POST',
+                                body: formData
+                            });
+                            
+                            const result = await response.json();
+                            
+                            if (result.status === 'success') {
+                                status.style.background = '#d4edda';
+                                status.style.color = '#155724';
+                                status.innerHTML = `✓ KTP berhasil diupload! <a href="${result.fileUrl}" target="_blank" style="color: #155724; text-decoration: underline;">Lihat File</a>`;
+                                resolve(result.fileUrl);
+                            } else {
+                                throw new Error(result.message || 'Upload gagal');
+                            }
+                        } catch (error) {
+                            status.style.background = '#f8d7da';
+                            status.style.color = '#721c24';
+                            status.textContent = '✗ Gagal upload KTP: ' + error.message;
+                            reject(error);
+                        }
+                    };
+                    
+                    reader.onerror = function() {
+                        reject(new Error('Gagal membaca file'));
+                    };
+                    
+                    reader.readAsDataURL(file);
+                });
+                
+            } catch (error) {
+                status.style.background = '#f8d7da';
+                status.style.color = '#721c24';
+                status.textContent = '✗ Error: ' + error.message;
+                throw error;
+            }
+        }
+
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('.btn-primary');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Menyimpan...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Get NIK for filename
+                const nik = document.getElementById('nikInput').value;
+                
+                // Upload KTP first
+                const ktpFile = document.getElementById('ktpFile').files[0];
+                let ktpFileUrl = '';
+                
+                if (ktpFile) {
+                    ktpFileUrl = await uploadKTP(ktpFile, nik);
+                }
+                
+                const formData = new FormData(this);
+                const data = {
+                    timestamp: new Date().toLocaleString('id-ID'),
+                    id: Date.now(),
+                    ktpFileUrl: ktpFileUrl
+                };
+                
+                // Get all form values
+                for (let [key, value] of formData.entries()) {
+                    if (key === 'ktpFile') continue;
+                    if (key === 'jenisUsaha' || key === 'kewajibanRetribusi') {
+                        if (!data[key]) data[key] = [];
+                        data[key].push(value);
+                    } else {
+                        data[key] = value;
+                    }
+                }
+                
+                // Convert arrays to comma-separated strings
+                if (data.jenisUsaha && data.jenisUsaha.length > 0) {
+                    data.jenisUsaha = data.jenisUsaha.join(', ');
+                } else {
+                    data.jenisUsaha = '';
+                }
+                
+                if (data.kewajibanRetribusi && data.kewajibanRetribusi.length > 0) {
+                    data.kewajibanRetribusi = data.kewajibanRetribusi.join(', ');
+                } else {
+                    data.kewajibanRetribusi = '';
+                }
+                
+                // Send to Google Sheets
+                const response = await fetch(SCRIPT_URL, {
+                    redirect: 'follow',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'text/plain',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                console.log('Data berhasil dikirim ke Google Sheets');
+                
+                // Show success message with details
+                const successMsg = document.getElementById('successMessage');
+                document.getElementById('savedNIK').textContent = data.nik;
+                document.getElementById('savedNama').textContent = data.namaLengkap;
+                document.getElementById('savedTPI').textContent = data.tpi;
+                document.getElementById('savedWaktu').textContent = data.timestamp;
+                
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 8000);
+                
+                // Reset form
+                this.reset();
+                document.getElementById('ktpPreview').style.display = 'none';
+                document.getElementById('ktpUploadStatus').style.display = 'none';
+                
+                // Scroll to success message
+                successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan: ' + error.message);
+            } finally {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        function resetForm() {
+            if (confirm('Apakah Anda yakin ingin mereset form?')) {
+                document.getElementById('registrationForm').reset();
+                document.getElementById('ktpPreview').style.display = 'none';
+                document.getElementById('ktpUploadStatus').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
